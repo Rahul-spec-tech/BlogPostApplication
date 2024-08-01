@@ -1,36 +1,17 @@
 const express = require('express');
 const app = express();
-const User = require('..models/User');
+const User = require('../models/User');
 
 //Creating a new user
-app.post('/add_user/', async(req, res) =>{
-    const{
-        user_name, email, phoneNum, location
-    }=req.body;
-    if(!user_name || !email || !phoneNum || !location){
-        if(!user_name){
-            return res.status(418).send("UserName should not be Empty");
-        }
-        if(!email){
-            return res.status(418).send("Email should not be Empty");
-        }
-        if(!phoneNum){
-            return res.status(418).send("PhoneNum should not be Empty");
-        }
-        if(!location){
-            return res.status(418).send("Location should not be Empty");
-        }
-    }
-    else{
-        try{
-            const user=new User({user_name, email, phoneNum, location})=req.body;
-            await user.save();
-            res.status(201).send(user);
-        }
-        catch (error){
-            res.status(400).send(error);
-        }
-    }
+app.post('/add_user', async(req, res) => {
+  const { userName, email, phoneNum, location }=req.body;
+  try{
+      const user=new User({userName, email, phoneNum, location});
+      await user.save();
+      res.status(201).send(user);
+  }catch (error) {
+      res.status(400).send(error);
+  }    
 });
 
 //Geting User Details

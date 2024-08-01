@@ -3,7 +3,7 @@ const app = express();
 const Post = require('../models/Post');
 
 // Create a new Blog Post
-app.post('/add_blog', async (req, res) => {
+app.post('/add_post', async (req, res) => {
   const { title, description, author } = req.body;
   try {
     const post = new Post({ title, description, author });
