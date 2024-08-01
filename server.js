@@ -1,19 +1,24 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const postRouter = require('./routes/Post_Router');
-const userRouter = require('./routes/User_Router');
+const postRouter = require('./routes/Post_Router'); 
+const userRouter = require('./routes/User_Router'); 
+
 const app = express();
-const port = 8080;
+const port = process.env.PORT;
 app.use(bodyParser.json());
 
-app.use('/users', userRouter);
-app.use('/posts', postRouter);
+app.use('/users', userRouter); 
+app.use('/posts', postRouter); 
 
-//Mongo DB Connection
-mongoose.connect('mongodb://localhost:27017/BlogApp') //moved to env file
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
   .then(() => console.log('MongoDB connected...'))
-  .catch(err => console.log(err));
+  .catch(err => console.log('MongoDB connection error:', err));
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
