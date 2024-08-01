@@ -3,22 +3,22 @@ const validator = require('validator');
 const userSchema = new mongoose.Schema({
     userName: {
         type: String,
-        required: true
+        required: true,
     },
     email: {
         type: String,
         required: true,
         unique: true,
-        validate: [validator.isEmail, 'Invalid email']
+        validate: [validator.isEmail, 'Invalid email'],
     },
     phoneNum: {
         type: String,
-        required: true
+        required: true,
     },
     location: {
         type: String,
-        required: true
-    }
+        required: true,
+    },
 });
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
 module.exports=User;
