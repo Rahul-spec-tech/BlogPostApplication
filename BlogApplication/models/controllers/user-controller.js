@@ -1,14 +1,38 @@
 const User = require('../User');
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 //Creating a user
 const createUser = async (req, res) => {
-    const { userName, email, phoneNum, location } = req.body;
+    const { userName, email, phoneNum, location, password } = req.body;
     try {
-      const user = new User({ userName, email, phoneNum, location });
+      const user = new User({ userName, email, phoneNum, location, password });
       await user.save();
       res.status(201).send(user);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error creating user:', error);
+      res.status(400).send(error);
+    }
+  };
+
+  //Logining in
+  const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+    try{
+      const user = await User.findOne({email});
+      if (!user){
+        return res.status(400).send('Invalid email or Password');
+      }
+      const isMatching = await bcrypt.compare(password, user.password);
+      if (!isMatching){
+        return res.status(400).send("Invalid email or Password");
+      }
+      const token = jwt.sign({_id: user._id}, "Your _jwt_secret", {expiresIn: '1h'});
+      res.send({ user, token});
+    }
+    catch (error){
+      console.error("Error logging in user:", error);
       res.status(400).send(error);
     }
   };
@@ -73,6 +97,7 @@ const createUser = async (req, res) => {
 
   module.exports = {
     createUser,
+    loginUser,
     getAllUsers,
     getUserById,
     updateUserById,

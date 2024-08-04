@@ -5,6 +5,9 @@ const userController = require('../models/controllers/user-controller.js');
 // Creating a new user
 app.post('/add_user', userController.createUser);
 
+//loging the user
+app.post('/login', userController.loginUser);
+
 // Getting User Details
 app.get('/get_user', userController.getAllUsers);
 

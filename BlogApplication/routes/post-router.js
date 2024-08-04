@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 //const Post = require('../models/Post');
 const postController = require('../models/controllers/post-controller');
+const auth = require('../middleware/auth-middleware.js');
 
 // Create a new Blog Post
 app.post('/add_post', postController.createPost);
