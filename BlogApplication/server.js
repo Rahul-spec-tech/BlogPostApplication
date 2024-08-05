@@ -8,8 +8,6 @@ const userRouter = require('./routes/user-router');
 const app = express();
 const port = process.env.PORT;
 const mongodbUri = process.env.MONGODB_URI;
-console.log('PORT:', port);
-console.log('MONGODB_URI:', mongodbUri);
 app.use(bodyParser.json());
 
 app.use('/users', userRouter); 
