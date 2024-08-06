@@ -12,6 +12,9 @@ const createUser = async (req, res) => {
     } 
     catch (error) {
       console.error('Error creating user:', error);
+      if(error.code === 11000){
+        return res.status(400).send("User with this email already exists.");
+      }
       res.status(400).send(error);
     }
   };
@@ -28,7 +31,7 @@ const createUser = async (req, res) => {
       if (!isMatching){
         return res.status(400).send("Invalid email or Password");
       }
-      const token = jwt.sign({_id: user._id}, "Your _jwt_secret", {expiresIn: '1h'});
+      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
       res.send({ user, token});
     }
     catch (error){
