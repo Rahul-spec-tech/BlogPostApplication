@@ -23,7 +23,7 @@ const createUser = async (req, res) => {
   const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try{
-      const user = await User.findOne({email});
+      const user = await User.findOne({ email });
       if (!user){
         return res.status(400).send('Invalid email or Password');
       }
@@ -31,8 +31,8 @@ const createUser = async (req, res) => {
       if (!isMatching){
         return res.status(400).send("Invalid email or Password");
       }
-      const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
-      res.send({ user, token});
+      const token = jwt.sign({_id: user._id, userName: user.userName }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
+      res.send({ user, token });
     }
     catch (error){
       console.error("Error logging in user:", error);

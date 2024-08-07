@@ -3,7 +3,7 @@ const User = require ('../User');
 const jwt =  require ('jsonwebtoken');
 
 const getUserDataFromToken = (req) => {
-  const token = req.header('Authorization').replace('Bearer','');
+  const token = req.header('Authorization').replace('Bearer','').trim();
   try{
     return jwt.verify(token, process.env.JWT_SECRET);
   }
