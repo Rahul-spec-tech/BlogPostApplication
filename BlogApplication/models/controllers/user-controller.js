@@ -11,9 +11,8 @@ const createUser = async (req, res) => {
       res.status(201).send(user);
     } 
     catch (error) {
-      console.error('Error creating user:', error);
       if(error.code === 11000){
-        return res.status(400).send("User with this email already exists.");
+        return res.status(400).json({error: "User with this email already exists."});
       }
       res.status(400).send(error);
     }
@@ -25,17 +24,16 @@ const createUser = async (req, res) => {
     try{
       const user = await User.findOne({ email });
       if (!user){
-        return res.status(400).send('Invalid email or Password');
+        return res.status(400).json({error: 'Invalid email or Password'});
       }
       const isMatching = await bcrypt.compare(password, user.password);
       if (!isMatching){
-        return res.status(400).send("Invalid email or Password");
+        return res.status(400).json({error: 'Invalid email or Password'});
       }
       const token = jwt.sign({_id: user._id, userName: user.userName }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
-      res.send({ user, token });
+      res.json({ user, token });
     }
     catch (error){
-      console.error("Error logging in user:", error);
       res.status(400).send(error);
     }
   };
@@ -46,7 +44,6 @@ const createUser = async (req, res) => {
       const users = await User.find();
       res.status(200).send(users);
     } catch (error) {
-      console.error('Error retrieving users:', error);
       res.status(400).send(error);
     }
   };
@@ -57,12 +54,11 @@ const createUser = async (req, res) => {
     try {
       const user = await User.findById(id);
       if (!user) {
-        return res.status(404).send('User not found');
+        return res.status(404).json({error: 'User not found'});
       }
       res.status(200).send(user);
     } catch (error) {
-      console.error('Error retrieving user by ID:', error);
-      res.status(400).send(error);
+       res.status(400).send(error);
     }
   };
 
@@ -74,11 +70,10 @@ const createUser = async (req, res) => {
       const user = await User.findByIdAndUpdate(id, { userName, email, phoneNum, location }, 
         { new: true, runValidators: true });
       if (!user) {
-        return res.status(404).send('User not found');
+        return res.status(404).json({error: 'User not found'});
       }
       res.status(200).send(user);
     } catch (error) {
-      console.error('Error updating user:', error);
       res.status(400).send(error);
     }
   };
@@ -89,11 +84,10 @@ const createUser = async (req, res) => {
     try {
       const user = await User.findByIdAndDelete(id);
       if (!user) {
-        return res.status(404).send('User not found');
+        return res.status(404).json({error: 'User not found'});
       }
-      res.status(200).send('User deleted successfully');
+      res.status(200).json({message: 'User deleted successfully'});
     } catch (error) {
-      console.error('Error deleting user:', error);
       res.status(400).send(error);
     }
   }; 
