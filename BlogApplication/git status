@@ -1,0 +1,54 @@
+[33mcommit 8b85a971ca5be60e700d1bd845bcc10419d3a197[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mAuthentication[m[33m, [m[1;31morigin/Authentication[m[33m)[m
+Author: Rahul Nagaraj <rahul.nagaraj@mallow-tech.com>
+Date:   Fri Aug 2 02:01:30 2024 +0530
+
+    Refactor: Move business logic to controllers and define routes in routes folder
+    
+    - Moved all business logic from routes to controller files.
+    - Defined route handling in the routes folder for better separation of concerns.
+
+[33mcommit 1802aad74530998c6b6fd432fe7646802f6a668f[m
+Author: Rahul Nagaraj <rahul.nagaraj@mallow-tech.com>
+Date:   Thu Aug 1 10:40:39 2024 +0530
+
+    Issue
+    
+    Finding error while working with User API
+
+[33mcommit 3396fb73fbf66f8d932ee0d8be2516be55b1aef5[m
+Author: Rahul Nagaraj <rahul.nagaraj@mallow-tech.com>
+Date:   Wed Jul 31 23:31:04 2024 +0530
+
+    Update auth.md
+
+[33mcommit afd7a298086581c8968fc42707bfeab272c9374f[m
+Author: Rahul Nagaraj <rahul.nagaraj@mallow-tech.com>
+Date:   Wed Jul 31 21:28:23 2024 +0530
+
+    update
+
+[33mcommit 67182a7b0fef35e97352297a6b0f8826f5b0945e[m
+Author: Rahul Nagaraj <rahul.nagaraj@mallow-tech.com>
+Date:   Wed Jul 31 21:25:51 2024 +0530
+
+    auth md
+
+[33mcommit fd6d946738566fda176bb9b16edf403e09eab539[m[33m ([m[1;31morigin/userAPIcreate[m[33m, [m[1;32muserAPIcreate[m[33m)[m
+Author: Rahul-spec-tech <rahulrn24cse@srishakthi.ac.in>
+Date:   Wed Jul 31 20:43:10 2024 +0530
+
+    User API creation
+
+[33mcommit a9b48e8502ccc5982843875cfb9cf6129d1eba04[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Rahul-spec-tech <rahulrn24cse@srishakthi.ac.in>
+Date:   Wed Jul 31 20:36:14 2024 +0530
+
+    Create README.md
+
+[33mcommit 858aa6d5b559d5fbda93f544ed392717ff7fd46e[m
+Author: Rahul-spec-tech <rahulrn24cse@srishakthi.ac.in>
+Date:   Wed Jul 31 18:31:39 2024 +0530
+
+    PostAPI
+    
+    Created the API for Post and connected with the MongoDB Server with default port 27107
