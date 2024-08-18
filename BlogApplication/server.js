@@ -3,13 +3,15 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const postRouter = require('./routes/post-router'); 
-const userRouter = require('./routes/user-router'); 
+const userRouter = require('./routes/user-router');
+const cors = require('cors');
 
 const app = express();
 const port = process.env.PORT;
 const mongodbUri = process.env.MONGODB_URI;
-app.use(bodyParser.json());
 
+app.use(bodyParser.json());
+app.use(cors()); 
 app.use('/users', userRouter); 
 app.use('/posts', postRouter); 
 
