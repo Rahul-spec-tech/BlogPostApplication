@@ -1,0 +1,58 @@
+body {
+    font-family: "Ariel";
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 10%;
+    margin: 10px;
+  }
+  
+  .login-container {
+    background: white;
+    border: 2px solid #000;
+    padding: 40px;
+    width: 320px;
+    
+    text-align: center;
+  }
+  
+  h1 {
+    font-size: 28px;
+    margin-bottom: 30px;
+  }
+  
+  .input-group {
+    margin-bottom: 20px;
+    text-align: left;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 16px;
+  }
+  
+  input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #000;
+    font-size: 14px;
+  }
+  
+  button {
+    background-color: #c2c2c2;
+    border: 2px solid #000;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    
+    font-size: 16px;
+  }
+  
+  button:hover {
+    background-color: #ffeb3b;
+  }
+  
+  
+  
