@@ -6,23 +6,29 @@ const LoginForm = () =>{
     const [userName, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/users/login', { email: userName, password },  { headers: { 'Content-Type': 'application/json'} });
-            // console.log('Login Response:', response.data);
-            const fetchedUserName = response.data.user.userName;
+            console.log('Login Response:', response.data);
             const { token } = response.data;
+            const fetchedUserName = response.data.userName;
+            console.log(token);
+            console.log(fetchedUserName);
             localStorage.setItem('authToken', token);
+            //console.log(fetchedUserName);
             navigate('/user-page', { state: { userName: fetchedUserName } });
         } catch (error) {
             console.error('Login failed:', error.response ? error.response.data : error.message);
             alert('Login failed. Please check your credentials and try again.');
         }
     };
+
     const handleRegister = () =>{
         navigate('/register');
     }
+
     return (
         <div className="login-container">
         <h1>Login</h1>

@@ -11,7 +11,7 @@ const UserDisplayPage = () => {
     }
     console.log('UserDisplayPage:', userName);
         if(!token){
-            return <Navigate to="/" />;
+            return <navigate to="/" />;
         }
     return(
         <div>
