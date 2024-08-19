@@ -14,8 +14,8 @@ const LoginForm = () =>{
             console.log('Login Response:', response.data);
             const { token } = response.data;
             const fetchedUserName = response.data.userName;
-            console.log(token);
-            console.log(fetchedUserName);
+            // console.log(token);
+            // console.log(fetchedUserName);
             localStorage.setItem('authToken', token);
             //console.log(fetchedUserName);
             navigate('/user-page', { state: { userName: fetchedUserName } });
