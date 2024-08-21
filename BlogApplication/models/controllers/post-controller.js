@@ -12,7 +12,6 @@ const getUserDataFromToken = (req) => {
   }
 };
 
-
 //Creating a Post
 const createPost = async (req, res) => {
     const { title, description} = req.body;
@@ -51,7 +50,7 @@ const getPostById = async (req, res) => {
       return res.status(401).json({error: 'Unauthorized'});
     }
     try {
-      const post = await Post.findOne({ _id: id, author:user._id});
+      const post = await Post.findOne({ _id: id, author: user._id});
       if (!post) {
         return res.status(404).json({error: 'The Post was not found or not created by this user.'});
       }

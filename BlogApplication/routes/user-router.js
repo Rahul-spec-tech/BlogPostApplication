@@ -1,23 +1,24 @@
 const express = require('express');
-const app = express();
+const router = express.Router();
 const userController = require('../models/controllers/user-controller.js');
+const auth = require('../middleware/auth-middleware.js');
 
 // Creating a new user
-app.post('/add_user', userController.createUser);
+router.post('/add_user', userController.createUser);
 
 //loging the user
-app.post('/login', userController.loginUser);
+router.post('/login', userController.loginUser);
 
 // Getting User Details
-app.get('/get_user', userController.getAllUsers);
+router.get('/get_user', userController.getAllUsers);
 
 // Getting User By Id
-app.get('/get_user/:id', userController.getUserById);
+router.get('/get_user/:id', userController.getUserById);
 
 // Updating User By Id
-app.put('/update_user/:id', userController.updateUserById);
+router.put('/update_user/:id', auth, userController.updateUserById);
 
 // Deleting User By Id
-app.delete('/delete_user/:id', userController.deleteUserById);
+router.delete('/delete_user/:id', userController.deleteUserById);
 
-module.exports = app;
+module.exports = router;

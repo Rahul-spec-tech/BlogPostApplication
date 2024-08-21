@@ -16,10 +16,22 @@ const RegisterPage = () => {
             alert('Passwords do not Match');
             return;
         }
+        if(!/^\d{10}$/.test(phoneNum)){
+            alert("Please provide 10 digit phone number");
+            return;
+        }
         try{
             const response = await axios.post('http://localhost:8080/users/add_user', {userName, email, phoneNum, location, password}, {headers: { 'Content-Type': 'application/json'}});
-            const {userName: fetchedUserName} = response.data;
-            navigate('/user-page',{state: {userName: fetchedUserName}});
+            if(response.data.token){
+                const { token, userName: fetchedUserName, _id } = response.data;
+                localStorage.setItem('authToken', token);
+                localStorage.setItem('userName', fetchedUserName);
+                localStorage.setItem('userId', response.data.userId);
+                navigate('/user-page',{state: {userName: fetchedUserName, userId: _id}});
+            }
+            else{
+                alert('Registration failed. Try again');
+            }
         }
         catch(error){
             console.error("Registration Failed:", error.response ? error.response.data : error.message);

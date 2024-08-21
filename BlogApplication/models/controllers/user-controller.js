@@ -21,21 +21,20 @@ const createUser = async (req, res) => {
   //Logining in
   const loginUser = async (req, res) => {
     const { email, password } = req.body;
-    try{
-      const user = await User.findOne({ email });
-      if (!user){
-        return res.status(400).json({error: 'Invalid email or Password'});
-      }
-      const isMatching = await bcrypt.compare(password, user.password);
-      if (!isMatching){
-        return res.status(400).json({error: 'Invalid email or Password'});
-      }
-      const token = jwt.sign({_id: user._id, userName: user.userName }, process.env.JWT_SECRET, {expiresIn: process.env.JWT_EXPIRES_IN});
-      res.json({ userName: user.userName, token });
-    }
-    catch (error){
-      console.error('Login error:', error);
-      res.status(400).send(error);
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+        const isMatching = await bcrypt.compare(password, user.password);
+        if (!isMatching) {
+            return res.status(400).json({ error: 'Invalid email or password' });
+        }
+        const token = jwt.sign({ _id: user._id, userName: user.userName }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
+        res.json({ userName: user.userName, userId: user._id, token });
+    } catch (error) {
+        console.error('Login error:', error);
+        res.status(400).send(error);
     }
   };
 
@@ -63,20 +62,33 @@ const createUser = async (req, res) => {
     }
   };
 
-  // Updating User By Id
+  //Update user by id
   const updateUserById = async (req, res) => {
     const { id } = req.params;
-    const { userName, email, phoneNum, location } = req.body; // Consistent field names
+    const { userName, phoneNum, locationData, password } = req.body;
     try {
-      const user = await User.findByIdAndUpdate(id, { userName, email, phoneNum, location }, 
-        { new: true, runValidators: true });
-      if (!user) {
-        return res.status(404).json({error: 'User not found'});
-      }
-      res.status(200).send(user);
+        if (!userName || !phoneNum || !locationData) {
+          console.log('Missing Fields:', {userName, phoneNum, locationData});
+          return res.status(400).json({ error: 'Missing fields' });
+        }
+        const updateData = { userName, phoneNum, location: locationData};
+        if (password) {
+            const hashedPassword = await bcrypt.hash(password, 10);
+            updateData.password = hashedPassword;
+        }
+        const user = await User.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json({
+          userName: user.userName,
+          userId: user._id, 
+          token: req.headers['authorization']?.split(' ')[1]});
     } catch (error) {
-      res.status(400).send(error);
+        console.error('Error:', error);
+        res.status(400).json({ error: 'Update failed. Please try again.' });
     }
+    // console.log(updateData);
   };
 
   //Deleting User By Id
@@ -101,3 +113,6 @@ const createUser = async (req, res) => {
     updateUserById,
     deleteUserById
   };
+
+
+
