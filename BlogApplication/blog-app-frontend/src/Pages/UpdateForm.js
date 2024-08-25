@@ -32,10 +32,7 @@ const UpdateForm = () => {
         try {
             const token = localStorage.getItem('authToken');
             console.log('Sending Data:', {
-                userName,
-                phoneNum,
-                locationData,
-                password
+                userName, phoneNum, locationData, password
             });
             const response = await axios.put(`http://localhost:8080/users/update_user/${userId}`,{ userName, phoneNum, locationData, password },{headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}});
             console.log('Updated Response:', response.data);

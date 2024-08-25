@@ -1,4 +1,5 @@
 import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LoginForm from './Pages/LoginPage';
 import UserDisplayPage from  './Pages/UserDisplayPage';
@@ -15,7 +16,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<LoginForm />} />
-        <Route path="/user-page" element={<ProtectedRoute><UserDisplayPage />non</ProtectedRoute> } />
+        <Route path="/user-page" element={<ProtectedRoute><UserDisplayPage /></ProtectedRoute> } />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
         {/* <Route path="/update-user" element={<UpdateForm />} /> */}

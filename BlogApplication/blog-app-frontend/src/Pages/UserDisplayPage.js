@@ -1,51 +1,85 @@
-import React, {useEffect} from 'react';
-import { useLocation, useNavigate} from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Dropdown } from 'react-bootstrap';
+import './UserDisplayPage.css';
+import UserProfile from './UserProfile';
 
 const UserDisplayPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const [user, setUser] = useState({});
+    const [showProfile, setShowProfile] = useState(false);
     const userName = location.state?.userName || localStorage.getItem('userName');
     const userId = location.state?.userId || localStorage.getItem('userId');
-    //const token = localStorage.getItem('authToken');
-    localStorage.setItem('userId', userId);
-    localStorage.setItem('userName', userName);
+
     useEffect(() => {
-        // const storedUserId = localStorage.getItem('userId');
-        // const storedUserName = localStorage.getItem('UserName');
-        if(!userId) {
-            //console.log('UserId is not found from localStorage');
-            alert('User Id is missing. Please try logging again');
+        if (!userId) {
+            alert('User ID is missing. Please try logging in again.');
             navigate('/');
+        } else {
+            fetchUserData();
         }
-        // else{
-        //     console.log('User Id exists:', userId);
-        // }
     }, [userId, navigate]);
 
-    const handleUpdateUserData = () => {
-        if(!userId){
-            alert('User Id is missing. Please try logging in');
-            navigate('/');
+    const fetchUserData = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            const response = await axios.get(`http://localhost:8080/users/get_user/${userId}`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            setUser({
+                userName: response.data.userName,
+                userEmail: response.data.email,
+                userPhone: response.data.phoneNum,
+                userLocation: response.data.location
+            });
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            alert('Failed to fetch user data. Please try again later.');
         }
-        else{
-            navigate('/update-user', { state: { userId, userName} });
-            //console.log('Navigating with User ID:', userId);
-        }
-        // console.log('User ID:', userId);
     };
-    
+
+    const handleProfileClick = () => {
+        setShowProfile(true);
+    };
+
+    const handleCloseProfile = () => {
+        setShowProfile(false);
+    };
+
     const handleLogout = () => {
-        localStorage.removeItem('authToken');
-        localStorage.removeItem('userName');
-        localStorage.removeItem('userId');
+        localStorage.clear();
         navigate('/');
     };
+
+    const handleUpdateUserData = () => {
+        if (!userId) {
+            alert('User ID is missing. Please try logging in again.');
+            navigate('/');
+        } else {
+            navigate('/update-user', { state: { userId, userName } });
+        }
+    };
+
     return (
         <div className="user-display-container">
-            <h1>Hello, {userName}!</h1>
-            {/* <p>Your User ID is: {userId}</p> */}
-            <button onClick={handleLogout}>Log Out</button>
-            <button onClick={handleUpdateUserData}>Update User</button>
+            <div className="menu-container">
+                <Dropdown>
+                    <Dropdown.Toggle variant="success" id="dropdown-basic">
+                        Menu
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                        <Dropdown.Item onClick={handleUpdateUserData}>Update</Dropdown.Item>
+                        <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+                        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
+            </div>
+            <div className="greeting">
+                {userName ? `Hello, ${userName}` : 'Hello, User'}
+            </div>
+            {showProfile && <UserProfile user={user} onClose={handleCloseProfile} />}
         </div>
     );
 };
