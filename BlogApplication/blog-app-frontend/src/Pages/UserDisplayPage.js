@@ -3,7 +3,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Dropdown } from 'react-bootstrap';
 import './UserDisplayPage.css';
-import UserProfile from './UserProfile';
 
 const UserDisplayPage = () => {
     const location = useLocation();
@@ -57,6 +56,10 @@ const UserDisplayPage = () => {
         }
     };
 
+    const createPost = () => {
+        navigate('/create-post', {state: { userId, userName}})
+    }
+
     return (
         <div className="user-display-container">
             <div className="menu-container">
@@ -74,7 +77,7 @@ const UserDisplayPage = () => {
             <div className="greeting">
                 {userName ? `Hello, ${userName}` : 'Hello, User'}
             </div>
-            <button type="button" onClick="createPost">Create new Post</button>
+            <button type="button" onClick={createPost}>Create new Post</button>
         </div>
     );
 };

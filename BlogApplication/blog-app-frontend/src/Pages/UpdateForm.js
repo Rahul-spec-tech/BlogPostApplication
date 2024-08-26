@@ -6,8 +6,6 @@ const UpdateForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
 
-    //const storedUser = JSON.parse(localStorage.getItem('userFormData'));
-
     const [userName, setUserName] = useState(location.state?.userName);
     const [phoneNum, setPhoneNum] = useState('');
     const [locationData, setLocationData] = useState('');
@@ -17,8 +15,6 @@ const UpdateForm = () => {
     console.log(userId);
     useEffect(() => {
         if (!userId) {
-            //console.log('UserId is undefined');
-            //userId = localStorage.getItem('userId');
             alert('User ID is missing. Please try logging in again.');
             navigate('/login'); 
         }

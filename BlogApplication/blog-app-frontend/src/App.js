@@ -7,6 +7,7 @@ import ProtectedRoute from './Pages/ProtectedRoute';
 import RegisterPage from './Pages/RegisterPage';
 import UpdateForm from './Pages/UpdateForm';
 import UserProfile from './Pages/UserProfile';
+import CreatePost from './Pages/NewPost';
 
 function NotFound(){
   return <h1>404-Not Found</h1>;
@@ -21,6 +22,7 @@ function App() {
         <Route path="/user-profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
+        <Route path="/create-post" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
         {/* <Route path="/update-user" element={<UpdateForm />} /> */}
         <Route path ="*" element={<NotFound />} />
       </Routes>

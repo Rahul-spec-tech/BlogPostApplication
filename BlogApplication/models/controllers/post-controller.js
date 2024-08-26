@@ -14,13 +14,13 @@ const getUserDataFromToken = (req) => {
 
 //Creating a Post
 const createPost = async (req, res) => {
-    const { title, description} = req.body;
+    const { userName, title, description} = req.body;
     const user = getUserDataFromToken(req);
     if(!user){
       return res.status(401).json({error: 'unauthorized'});
     }
     try {
-      const post = new Post({ title, description, author:user._id });
+      const post = new Post({ author:userName, title, description});
       await post.save();
       res.status(201).json({post, username: user.userName});
     } catch (error) {
