@@ -20,9 +20,9 @@ const createPost = async (req, res) => {
       return res.status(401).json({error: 'unauthorized'});
     }
     try {
-      const post = new Post({ author:userName, title, description});
+      const post = new Post({ title, description, author:userName });
       await post.save();
-      res.status(201).json({post, username: user.userName});
+      res.status(201).json({post, username: user._id});
     } catch (error) {
       res.status(400).json({error: 'An error occured while creating the post.'});
     }

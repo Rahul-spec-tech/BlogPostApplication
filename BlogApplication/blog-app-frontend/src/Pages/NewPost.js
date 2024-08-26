@@ -10,7 +10,7 @@ const CreatePost =() => {
     const handleSubmit = async(e) => {
         e.preventDefault();
         const token = localStorage.getItem('authToken');
-        const userId = location.state?.userId;
+        //const userId = location.state?.userId;
         try{
             const response = await axios.post(`http://localhost:8080/posts/add_post`, {userName, title, description}, {headers: {'Authorization': `Bearer ${token}`}});
             alert('Post Created Successfully');
