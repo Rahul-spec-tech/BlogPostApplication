@@ -38,36 +38,40 @@ const RegisterPage = () => {
             alert('Registration failed. Please Try again');
         }
     };
+    const redirectLoginPage=()=>{
+        navigate('/login');
+    }
     return (
         <div className="login-container">
-        <h2>Register Form</h2>
-        <form onSubmit={handleRegister} className="login-form">
-            <div className="input-group">
-                <label>UserName: </label>
-                <input type="text" placeholder="Enter your UserName" value={userName} onChange={(e) => setUserName(e.target.value)} required />
-            </div>
-            <div className="input-group">
-                <label>Email: </label>
-                <input type="email" placeholder="Enter your EmailId" value={email} onChange={(e) => setEmail(e.target.value)} required />
-            </div>
-            <div className="input-group">
-                <label>PhoneNumber: </label>
-                <input type="text" placeholder="Enter your Phone Number" value={phoneNum} onChange={(e) => setPhoneNum(e.target.value)} required />
-            </div>
-            <div className="input-group">
-                <label>Location: </label>
-                <input type="text" placeholder="Enter your Location" value={location} onChange={(e) => setLocation(e.target.value)} required />
-            </div>
-            <div className="input-group">
-                <label>Password: </label>
-                <input type="password" placeholder="Enter your Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-            </div>
-            <div className="input-group">
-                <label>Confirm Password:</label>
-                <input type="password" placeholder="Confirm your Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
-            </div>
-            <button type="submit">Register</button>
-        </form>
+            <h2>Register Form</h2>
+            <form onSubmit={handleRegister} className="login-form">
+                <div className="input-group">
+                    <label>UserName: </label>
+                    <input type="text" placeholder="Enter your UserName" value={userName} onChange={(e) => setUserName(e.target.value)} required />
+                </div>
+                <div className="input-group">
+                    <label>Email: </label>
+                    <input type="email" placeholder="Enter your EmailId" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <div className="input-group">
+                    <label>PhoneNumber: </label>
+                    <input type="text" placeholder="Enter your Phone Number" value={phoneNum} onChange={(e) => setPhoneNum(e.target.value)} required />
+                </div>
+                <div className="input-group">
+                    <label>Location: </label>
+                    <input type="text" placeholder="Enter your Location" value={location} onChange={(e) => setLocation(e.target.value)} required />
+                </div>
+                <div className="input-group">
+                    <label>Password: </label>
+                    <input type="password" placeholder="Enter your Password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <div className="input-group">
+                    <label>Confirm Password:</label>
+                    <input type="password" placeholder="Confirm your Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+                </div>
+                <button type="submit">Register</button>
+                <button type="button" onClick={redirectLoginPage}>Login</button>
+            </form>
         </div>
     );
 };

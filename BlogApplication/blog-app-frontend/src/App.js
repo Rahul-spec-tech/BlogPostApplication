@@ -6,6 +6,7 @@ import UserDisplayPage from  './Pages/UserDisplayPage';
 import ProtectedRoute from './Pages/ProtectedRoute';
 import RegisterPage from './Pages/RegisterPage';
 import UpdateForm from './Pages/UpdateForm';
+import UserProfile from './Pages/UserProfile';
 
 function NotFound(){
   return <h1>404-Not Found</h1>;
@@ -15,8 +16,9 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<LoginForm />} />
-        <Route path="/user-page" element={<ProtectedRoute><UserDisplayPage /></ProtectedRoute> } />
+        <Route path="/login" element={<LoginForm />} />
+        <Route path="/" element={<ProtectedRoute><UserDisplayPage /></ProtectedRoute> } />
+        <Route path="/user-profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
         {/* <Route path="/update-user" element={<UpdateForm />} /> */}

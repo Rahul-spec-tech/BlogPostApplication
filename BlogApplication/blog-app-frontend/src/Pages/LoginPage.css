@@ -6,16 +6,22 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
-  overflow: hidden;
+  overflow-y: autos;
 }
 
 .login-container {
-  background: white;
-  border: none;
+  min-height: 100vh;
+  max-width: 400px;
+  margin: 0 auto;
   padding: 40px;
-  width: 350px;
-  border-radius: 15px;
+  border-radius: 8px;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+  justify-content: center;
+  border: none;
+  width: 350px;
   text-align: center;
   position: relative;
 }

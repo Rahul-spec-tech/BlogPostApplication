@@ -4,11 +4,15 @@ import axios from 'axios';
 
 const UpdateForm = () => {
     const location = useLocation();
-    const [userName, setUserName] = useState(location.state?.userName || '');
+    const navigate = useNavigate();
+
+    //const storedUser = JSON.parse(localStorage.getItem('userFormData'));
+
+    const [userName, setUserName] = useState(location.state?.userName);
     const [phoneNum, setPhoneNum] = useState('');
     const [locationData, setLocationData] = useState('');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
+
     const userId = localStorage.getItem('userId');
     console.log(userId);
     useEffect(() => {
@@ -16,7 +20,7 @@ const UpdateForm = () => {
             //console.log('UserId is undefined');
             //userId = localStorage.getItem('userId');
             alert('User ID is missing. Please try logging in again.');
-            navigate('/'); 
+            navigate('/login'); 
         }
         // else{
         //     console.log('Received User ID:', userId);
@@ -37,13 +41,17 @@ const UpdateForm = () => {
             const response = await axios.put(`http://localhost:8080/users/update_user/${userId}`,{ userName, phoneNum, locationData, password },{headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}});
             console.log('Updated Response:', response.data);
             alert('Data updated successfully');
-            navigate('/');
+            navigate('/login');
         } catch (error) {
             const errorMessage = error.response?.data?.error || 'Update failed. Please try again later.';
             alert(errorMessage);
             console.error('Update failed:', errorMessage);
         }
     };
+
+    const redirectUserPage=()=>{
+        navigate('/');
+    }
     
     return (
         <div className="login-container">
@@ -66,6 +74,7 @@ const UpdateForm = () => {
                     <input type="password" value={password} placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password"/>
                 </div>
                 <button type="submit">Update</button>
+                <button type="button" onClick={redirectUserPage}>Close</button>
             </form>
         </div>
     );

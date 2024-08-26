@@ -22,7 +22,7 @@ const LoginForm = () => {
                 localStorage.setItem('userId', userId);
                 // console.log("User ID2:", userId);
                 console.log('Login Response:', response.data);
-                navigate('/user-page', { state: { userName, userId } });
+                navigate('/', { state: { userName, userId } });
             } else {
                 alert('Login failed. Try again');
             }

@@ -9,7 +9,6 @@ const UserDisplayPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [user, setUser] = useState({});
-    const [showProfile, setShowProfile] = useState(false);
     const userName = location.state?.userName || localStorage.getItem('userName');
     const userId = location.state?.userId || localStorage.getItem('userId');
 
@@ -41,22 +40,18 @@ const UserDisplayPage = () => {
     };
 
     const handleProfileClick = () => {
-        setShowProfile(true);
-    };
-
-    const handleCloseProfile = () => {
-        setShowProfile(false);
+        navigate('/user-profile', {state: { user }});
     };
 
     const handleLogout = () => {
         localStorage.clear();
-        navigate('/');
+        navigate('/login');
     };
 
     const handleUpdateUserData = () => {
         if (!userId) {
             alert('User ID is missing. Please try logging in again.');
-            navigate('/');
+            navigate('/login');
         } else {
             navigate('/update-user', { state: { userId, userName } });
         }
@@ -79,7 +74,7 @@ const UserDisplayPage = () => {
             <div className="greeting">
                 {userName ? `Hello, ${userName}` : 'Hello, User'}
             </div>
-            {showProfile && <UserProfile user={user} onClose={handleCloseProfile} />}
+            <button type="button" onClick="createPost">Create new Post</button>
         </div>
     );
 };

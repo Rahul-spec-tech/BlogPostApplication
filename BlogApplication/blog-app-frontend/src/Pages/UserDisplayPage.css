@@ -7,10 +7,10 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 40px;
-    width: 80vw;
+    width: 65vw;
     max-width: 1000px;
     height: auto;
-    min-height: 60vh;
+    min-height: 85vh;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -21,6 +21,10 @@
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .menu-container {
