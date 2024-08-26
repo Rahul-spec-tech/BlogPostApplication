@@ -22,12 +22,9 @@ const RegisterPage = () => {
         }
         try{
             const response = await axios.post('http://localhost:8080/users/add_user', {userName, email, phoneNum, location, password}, {headers: { 'Content-Type': 'application/json'}});
-            if(response.data.token){
-                const { token, userName: fetchedUserName, _id } = response.data;
-                localStorage.setItem('authToken', token);
-                localStorage.setItem('userName', fetchedUserName);
-                localStorage.setItem('userId', response.data.userId);
-                navigate('/user-page',{state: {userName: fetchedUserName, userId: _id}});
+            if(response){
+                alert('Registed Successfully. Please Login');
+                navigate(`/login`);
             }
             else{
                 alert('Registration failed. Try again');

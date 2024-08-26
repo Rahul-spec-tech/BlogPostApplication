@@ -1,6 +1,6 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginForm from './Pages/LoginPage';
 import UserDisplayPage from  './Pages/UserDisplayPage';
 import ProtectedRoute from './Pages/ProtectedRoute';
@@ -17,12 +17,13 @@ function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<LoginForm />} />
-        <Route path="/" element={<ProtectedRoute><UserDisplayPage /></ProtectedRoute> } />
-        <Route path="/user-profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
+        <Route path="/:userId/user-page" element={<ProtectedRoute><UserDisplayPage /></ProtectedRoute> } />
+        <Route path="/:userId/user-profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />
         <Route path="/register" element={<RegisterPage />} />
-        <Route path="/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
-        <Route path="/create-post" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
+        <Route path="/:userId/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
+        <Route path="/:userId/create-post" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
         {/* <Route path="/update-user" element={<UpdateForm />} /> */}
         <Route path ="*" element={<NotFound />} />
       </Routes>

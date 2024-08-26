@@ -35,9 +35,10 @@ const getAllPosts =  async (req, res) => {
     return res.status(401).json({error: 'Unauthorized'});
   }
     try {
-      const posts = await Post.find({ author: user._id});
+      const posts = await Post.find();
       res.status(200).json(posts);
     } catch (error) {
+      console.error('Error fetching posts:', error);
       res.status(400).json({error: 'An error occured while retrieving the posts.'});
     }
 };

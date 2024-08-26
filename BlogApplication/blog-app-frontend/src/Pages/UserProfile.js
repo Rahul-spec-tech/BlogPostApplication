@@ -1,11 +1,13 @@
 import React from 'react';
-import {useLocation} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import './UserProfile.css';
 const UserProfile = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const user=location.state?.user;
+    const userId = localStorage.getItem('userId');
     const onClose= () => {
-        window.history.back();
+        navigate(`/${userId}/user-page`);
     }
     console.log('User Data', user);
     if(!user){

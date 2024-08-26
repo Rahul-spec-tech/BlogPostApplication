@@ -5,24 +5,22 @@ import axios from 'axios';
 const UpdateForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const user = location.state?.user || {};
+    //console.log("user",user);
 
-    const [userName, setUserName] = useState(location.state?.userName);
-    const [phoneNum, setPhoneNum] = useState('');
-    const [locationData, setLocationData] = useState('');
+    const [userName, setUserName] = useState(user.userName || '');
+    const [phoneNum, setPhoneNum] = useState(user.userPhone || '');
+    const [locationData, setLocationData] = useState(user.userLocation || '');
     const [password, setPassword] = useState('');
-
     const userId = localStorage.getItem('userId');
-    console.log(userId);
+    //console.log(userId);
     useEffect(() => {
         if (!userId) {
             alert('User ID is missing. Please try logging in again.');
             navigate('/login'); 
         }
-        // else{
-        //     console.log('Received User ID:', userId);
-        // }
     }, [userId, navigate]);
-
+    
     const handleUpdate = async (e) => {
         e.preventDefault();
         if (!userId) {
@@ -46,7 +44,7 @@ const UpdateForm = () => {
     };
 
     const redirectUserPage=()=>{
-        navigate('/');
+        navigate(`/${userId}/user-page`);
     }
     
     return (
@@ -59,7 +57,7 @@ const UpdateForm = () => {
                 </div>
                 <div className="input-group">
                     <label>PhoneNum:</label>
-                    <input type="text" value={phoneNum} placeholder="Enter your Phone Number" onChange={(e) => setPhoneNum(e.target.value)} required />
+                    <input type="text" value={phoneNum} placeholder="Enter your Phone Number" onChange={(e) => setPhoneNum(e.target.value)}  required />
                 </div>
                 <div className="input-group">
                     <label>Location:</label>
@@ -67,7 +65,7 @@ const UpdateForm = () => {
                 </div>
                 <div className="input-group">
                     <label>Password:</label>
-                    <input type="password" value={password} placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password"/>
+                    <input type="password" value={password} placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required />
                 </div>
                 <button type="submit">Update</button>
                 <button type="button" onClick={redirectUserPage}>Close</button>

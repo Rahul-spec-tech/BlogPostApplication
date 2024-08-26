@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginPage.css';
+
 const LoginForm = () => {
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
@@ -10,19 +11,15 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/users/login',
-                { email: email, password: password },
+                { email, password },
                 { headers: { 'Content-Type': 'application/json' } }
             );
-            console.log('Login Response:', response.data);
             if (response.data.token) {
                 const { userName, userId } = response.data;
-                // console.log('User Id1:', userId);
                 localStorage.setItem('authToken', response.data.token);
                 localStorage.setItem('userName', userName);
                 localStorage.setItem('userId', userId);
-                // console.log("User ID2:", userId);
-                console.log('Login Response:', response.data);
-                navigate('/', { state: { userName, userId } });
+                navigate(`/${userId}/user-page`, { state: { userName, userId } });
             } else {
                 alert('Login failed. Try again');
             }
@@ -54,4 +51,5 @@ const LoginForm = () => {
         </div>
     );
 };
+
 export default LoginForm;

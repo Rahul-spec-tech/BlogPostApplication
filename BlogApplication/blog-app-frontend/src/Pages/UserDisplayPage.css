@@ -7,10 +7,10 @@
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 40px;
-    width: 65vw;
+    width: 85vw;
     max-width: 1000px;
-    height: auto;
-    min-height: 85vh;
+    height: 85vh;
+    min-height: 65vh;
     margin: 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
@@ -38,6 +38,21 @@
     justify-content: center;
     gap: 15px;
     margin-top: 20px;
+    position: absolute;
+    bottom: 10%;
+    width: 100%;
+    left: 0;
+    padding: 0 20px;
+}
+
+.create-post-button {
+    background-color: #da8358;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 12px 20px;
+    font-size: 16px;
+    cursor: pointer;
 }
 
 .logout-button,
@@ -55,4 +70,26 @@
 .logout-button:hover,
 .update-button:hover {
     background-color: #0056b3;
+}
+
+.posts-container {
+    margin-top: 60px; 
+    max-height: 60vh; 
+    overflow-y: auto; 
+    width: 100%;
+}
+
+.post {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.post h3 {
+    margin-top: 0;
+}
+
+.post p {
+    margin: 5px 0;
 }

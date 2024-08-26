@@ -8,15 +8,17 @@ const UserDisplayPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [user, setUser] = useState({});
+    const [posts, setPosts] = useState([]);
     const userName = location.state?.userName || localStorage.getItem('userName');
     const userId = location.state?.userId || localStorage.getItem('userId');
 
     useEffect(() => {
         if (!userId) {
             alert('User ID is missing. Please try logging in again.');
-            navigate('/');
+            navigate('/login');
         } else {
             fetchUserData();
+            fetchPosts();
         }
     }, [userId, navigate]);
 
@@ -38,8 +40,19 @@ const UserDisplayPage = () => {
         }
     };
 
+    const fetchPosts = async () => {
+        try {
+            const token = localStorage.getItem('authToken');
+            const response = await axios.get('http://localhost:8080/posts/get_posts', {headers: { 'Authorization': `Bearer ${token}`}});
+            setPosts(response.data);
+        } catch (error) {
+            console.error('Error fetching posts:', error);
+            alert('Failed to fetch posts. Please try again later.');
+        }
+    };
+    
     const handleProfileClick = () => {
-        navigate('/user-profile', {state: { user }});
+        navigate(`/${userId}/user-profile`, {state: { user, userId }});
     };
 
     const handleLogout = () => {
@@ -52,12 +65,12 @@ const UserDisplayPage = () => {
             alert('User ID is missing. Please try logging in again.');
             navigate('/login');
         } else {
-            navigate('/update-user', { state: { userId, userName } });
+            navigate(`/${userId}/update-user`, { state: { user, userId } });
         }
     };
 
     const createPost = () => {
-        navigate('/create-post', {state: { userId, userName}})
+        navigate(`/${userId}/create-post`, {state: { userId, userName}})
     }
 
     return (
@@ -77,7 +90,17 @@ const UserDisplayPage = () => {
             <div className="greeting">
                 {userName ? `Hello, ${userName}` : 'Hello, User'}
             </div>
-            <button type="button" onClick={createPost}>Create new Post</button>
+            <div className="posts-container">
+                <h2>Blog Posts</h2>
+                {posts.length>0 ? (posts.map((post)=>(
+                    <div key={post._id} className="post">
+                        <h3>{post.title}</h3>
+                        <p><strong>Author:</strong> {post.author}</p>
+                        <p>{post.description}</p>
+                    </div>
+                ))):(<p>No Posts Available.</p>)}
+            </div>
+            <button className="create-post-button" onClick={createPost}>Create New Post</button>
         </div>
     );
 };
