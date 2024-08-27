@@ -1,4 +1,5 @@
 import React from 'react';
+import { jwtDecode } from 'jwt-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginForm from './Pages/LoginPage';
@@ -14,10 +15,13 @@ function NotFound(){
 }
 
 function App() {
+  const authToken = localStorage.getItem('authToken');
+  const userId = authToken ? jwtDecode(authToken).userId : null;
+
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={authToken ? <Navigate to={`/${userId}/user-page`} /> : <Navigate to="/login" />} />
         <Route path="/login" element={<LoginForm />} />
         <Route path="/:userId/user-page" element={<ProtectedRoute><UserDisplayPage /></ProtectedRoute> } />
         <Route path="/:userId/user-profile" element={<ProtectedRoute><UserProfile /></ProtectedRoute>} />

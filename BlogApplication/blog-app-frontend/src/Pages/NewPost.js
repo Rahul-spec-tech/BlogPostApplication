@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './NewPost.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 const CreatePost = () => {
@@ -21,24 +22,30 @@ const CreatePost = () => {
             alert('Error occurred while creating the post. Try again');
         }
     };
+    const closeButton = () => {
+        navigate(`/${userId}/user-page`);
+    }
     return (
-        <div>
-            <h1>Create a New Post</h1>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Author:</label>
-                    <span>{userName}</span>
-                </div>
-                <div>
-                    <label>Title:</label>
-                    <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
-                </div>
-                <div>
-                    <label>Description:</label>
-                    <input type="text" value={description} onChange={(e) => setDescription(e.target.value)} required />
-                </div>
-                <button type="submit">Submit</button>
-            </form>
+        <div className="model-overlay">
+            <div className="model-content">
+                <h1>Create a New Post</h1>
+                <form onSubmit={handleSubmit}>
+                    <div>
+                        <label>Author:</label>
+                        <span>{userName}</span>
+                    </div>
+                    <div>
+                        <label>Title:</label>
+                        <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} required />
+                    </div>
+                    <div className="text-area">
+                        <label>Description:</label>
+                        <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+                    </div>
+                    <button type="submit">Create</button>
+                    <button onClick={closeButton}>Close</button>
+                </form>
+            </div>
         </div>
     );
 };

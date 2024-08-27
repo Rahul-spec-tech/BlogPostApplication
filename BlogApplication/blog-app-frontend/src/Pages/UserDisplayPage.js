@@ -74,34 +74,42 @@ const UserDisplayPage = () => {
     }
 
     return (
+        <div>
+        <div className="app-name">Blog App</div>
+        <div className="menu-container">
+            <Dropdown>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Menu
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={handleUpdateUserData}>Update</Dropdown.Item>
+                    <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
+        </div>
+
         <div className="user-display-container">
-            <div className="menu-container">
-                <Dropdown>
-                    <Dropdown.Toggle variant="success" id="dropdown-basic">
-                        Menu
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <Dropdown.Item onClick={handleUpdateUserData}>Update</Dropdown.Item>
-                        <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
-                        <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-                    </Dropdown.Menu>
-                </Dropdown>
-            </div>
             <div className="greeting">
                 {userName ? `Hello, ${userName}` : 'Hello, User'}
             </div>
             <div className="posts-container">
                 <h2>Blog Posts</h2>
-                {posts.length>0 ? (posts.map((post)=>(
-                    <div key={post._id} className="post">
-                        <h3>{post.title}</h3>
-                        <p><strong>Author:</strong> {post.author}</p>
-                        <p>{post.description}</p>
-                    </div>
-                ))):(<p>No Posts Available.</p>)}
+                {posts.length > 0 ? (
+                    posts.map((post) => (
+                        <div key={post._id} className="post">
+                            <h3>{post.title}</h3>
+                            <p><strong>Author:</strong> {post.author}</p>
+                            <p>{post.description}</p>
+                        </div>
+                    ))
+                ) : (
+                    <p>No Posts Available.</p>
+                )}
             </div>
             <button className="create-post-button" onClick={createPost}>Create New Post</button>
         </div>
+    </div>
     );
 };
 

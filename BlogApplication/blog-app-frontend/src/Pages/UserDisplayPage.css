@@ -5,17 +5,25 @@
     justify-content: center;
     background: #ffffff;
     border: 1px solid #ddd;
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     padding: 40px;
-    width: 85vw;
-    max-width: 1000px;
-    height: 85vh;
-    min-height: 65vh;
-    margin: 20px auto;
+    width: 98vw;
+    max-width: 10000px;
+    height: 150px;
+    min-height: 88vh;
+    margin: 60px auto 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     box-sizing: border-box;
+    
 }
+
+/* .menu-container {
+    color: #030303;
+    font-size: 1.5rem;
+    font-weight: bold;
+    
+} */
 
 .greeting {
     font-size: 24px;
@@ -28,9 +36,20 @@
 }
 
 .menu-container {
-    position: absolute;
+    position: fixed;
     top: 10px;
-    right: 10px;
+    right: 20px; 
+    z-index: 800;
+}
+
+.app-name {
+    color: #030303;
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
 }
 
 .button-group {
