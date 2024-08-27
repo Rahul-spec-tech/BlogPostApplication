@@ -51,7 +51,7 @@ const getPostById = async (req, res) => {
       return res.status(401).json({error: 'Unauthorized'});
     }
     try {
-      const post = await Post.findOne({ _id: id, author: user._id});
+      const post = await Post.findOne({ _id: id, author: user.userName});
       if (!post) {
         return res.status(404).json({error: 'The Post was not found or not created by this user.'});
       }
@@ -64,22 +64,27 @@ const getPostById = async (req, res) => {
   //Updating Post By Id
   const updatePostById = async (req, res) => {
     const { id } = req.params;
-    const { title, description} = req.body;
+    const { title, description } = req.body;
     const user = getUserDataFromToken(req);
-    if(!user){
-      return res.status(401).json({error: 'Unauthorized'});
+    if (!user) {
+      return res.status(401).json({ error: 'Unauthorized' });
     }
+    console.log('Updating post with ID:', id);
+    console.log('User ID from token:', user._id);
     try {
       const post = await Post.findOneAndUpdate(
-      {_id:id , author: user._id},
-      { title, description, updated_At: Date.now() }, 
-      { new: true, runValidators: true });
+        { _id: id, author: user._id },
+        { title, description, updated_At: Date.now() },
+        { new: true, runValidators: true }
+      );
+      console.log('Post found:', post);
       if (!post) {
-        return res.status(404).json({error: 'Post is not found or not created by this user.'});
+        return res.status(404).json({ error: 'Post not found or not created by this user.' });
       }
       res.status(200).json(post);
     } catch (error) {
-      res.status(400).json({error: 'An error occured.'});
+      console.error('Error updating post:', error);
+      res.status(400).json({ error: 'An error occurred.' });
     }
   };
 

@@ -9,7 +9,7 @@ const isAuthenticated = () => {
     }
     try {
         const decodedToken = jwtDecode(authToken);
-        console.log('Token', decodedToken);
+        //onsole.log('Token', decodedToken);
         const currentTime = Date.now() / 1000;
         return decodedToken.exp > currentTime; 
     } catch (error) {

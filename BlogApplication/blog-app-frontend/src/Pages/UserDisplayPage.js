@@ -11,6 +11,7 @@ const UserDisplayPage = () => {
     const [posts, setPosts] = useState([]);
     const userName = location.state?.userName || localStorage.getItem('userName');
     const userId = location.state?.userId || localStorage.getItem('userId');
+    const postId = localStorage.getItem('postId');
 
     useEffect(() => {
         if (!userId) {
@@ -43,12 +44,16 @@ const UserDisplayPage = () => {
     const fetchPosts = async () => {
         try {
             const token = localStorage.getItem('authToken');
-            const response = await axios.get('http://localhost:8080/posts/get_posts', {headers: { 'Authorization': `Bearer ${token}`}});
+            const response = await axios.get(`http://localhost:8080/posts/get_posts`, {headers: { 'Authorization': `Bearer ${token}`}});
             setPosts(response.data);
         } catch (error) {
             console.error('Error fetching posts:', error);
             alert('Failed to fetch posts. Please try again later.');
         }
+    };
+
+    const editPost = (postId) =>{
+        navigate(`/${userId}/edit-post/${postId}`);
     };
     
     const handleProfileClick = () => {
@@ -108,9 +113,9 @@ const UserDisplayPage = () => {
                 )}
             </div>
             <button className="create-post-button" onClick={createPost}>Create New Post</button>
+            <button className="edit-post-button" onClick={() => editPost(postId)}>Edit Post</button>
         </div>
     </div>
     );
 };
-
 export default UserDisplayPage;

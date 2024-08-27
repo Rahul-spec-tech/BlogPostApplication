@@ -14,8 +14,11 @@ const CreatePost = () => {
         const token = localStorage.getItem('authToken');
         try {
             const response = await axios.post('http://localhost:8080/posts/add_post',{ userName, title, description },{ headers: { 'Authorization': `Bearer ${token}`}});
+            const postId = response.data.post._id;
+            localStorage.setItem('postId', postId);
             alert('Post Created Successfully');
             console.log('Post Data', response.data);
+            console.log(postId);
             navigate(`/${userId}/user-page`);
         } catch (error) {
             console.log("Error occurred while creating the post. Try again", error);

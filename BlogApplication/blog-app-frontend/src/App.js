@@ -9,6 +9,7 @@ import RegisterPage from './Pages/RegisterPage';
 import UpdateForm from './Pages/UpdateForm';
 import UserProfile from './Pages/UserProfile';
 import CreatePost from './Pages/NewPost';
+import EditPost from './Pages/EditPost';
 
 function NotFound(){
   return <h1>404-Not Found</h1>;
@@ -28,6 +29,7 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/:userId/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
         <Route path="/:userId/create-post" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
+        <Route path="/:userId/edit-post/:postId" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
         {/* <Route path="/update-user" element={<UpdateForm />} /> */}
         <Route path ="*" element={<NotFound />} />
       </Routes>
