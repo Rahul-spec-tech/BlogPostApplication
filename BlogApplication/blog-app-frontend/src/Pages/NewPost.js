@@ -9,6 +9,7 @@ const CreatePost = () => {
     const [description, setDescription] = useState('');
     const userName = location.state?.userName || 'User';
     const userId = location.state?.userId || localStorage.getItem('userId');
+    
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('authToken');
@@ -25,9 +26,11 @@ const CreatePost = () => {
             alert('Error occurred while creating the post. Try again');
         }
     };
+
     const closeButton = () => {
         navigate(`/${userId}/user-page`);
     }
+
     return (
         <div className="model-overlay">
             <div className="model-content">
@@ -43,7 +46,7 @@ const CreatePost = () => {
                     </div>
                     <div className="text-area">
                         <label>Description:</label>
-                        <textarea value={description} onChange={(e) => setDescription(e.target.value)} required />
+                        <textarea value={description} rows="5" cols="55" onChange={(e) => setDescription(e.target.value)} required />
                     </div>
                     <button type="submit">Create</button>
                     <button onClick={closeButton}>Close</button>

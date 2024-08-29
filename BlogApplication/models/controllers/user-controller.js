@@ -65,13 +65,13 @@ const createUser = async (req, res) => {
   //Update user by id
   const updateUserById = async (req, res) => {
     const { id } = req.params;
-    const { userName, phoneNum, locationData, password } = req.body;
+    const { userName, phoneNum, location, password } = req.body;
     try {
-        if (!userName || !phoneNum || !locationData) {
-          console.log('Missing Fields:', {userName, phoneNum, locationData});
+        if (!userName || !phoneNum || !location) {
+          console.log('Missing Fields:', {userName, phoneNum, location});
           return res.status(400).json({ error: 'Missing fields' });
         }
-        const updateData = { userName, phoneNum, location: locationData};
+        const updateData = { userName, phoneNum, location };
         if (password) {
             const hashedPassword = await bcrypt.hash(password, 10);
             updateData.password = hashedPassword;

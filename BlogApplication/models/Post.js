@@ -25,12 +25,14 @@ const postSchema = new mongoose.Schema({
         default: Date.now,
     },
     author:{
+        //type: mongoose.Schema.Types.ObjectId,
         type: String,
+        //ref: 'User',
         required: true
     }
 },
 {
-    timestamps: true,
+    timestamps: { createdAt: 'created_At', updatedAt: 'updated_At'}
 });
 
 const Post=mongoose.model('Post',postSchema);

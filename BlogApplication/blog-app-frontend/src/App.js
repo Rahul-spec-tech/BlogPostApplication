@@ -1,5 +1,5 @@
 import React from 'react';
-import { jwtDecode } from 'jwt-decode';
+import {jwtDecode}  from 'jwt-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginForm from './Pages/LoginPage';
@@ -15,10 +15,22 @@ function NotFound(){
   return <h1>404-Not Found</h1>;
 }
 
+function decodeToken(token) {
+  try {
+      return jwtDecode(token);
+  } catch (error) {
+      console.error('Token decoding failed:', error);
+      return null;
+  }
+}
+
 function App() {
   const authToken = localStorage.getItem('authToken');
-  const userId = authToken ? jwtDecode(authToken).userId : null;
-
+  const decodedToken = authToken ? decodeToken(authToken) : null;
+  const userId = decodedToken ? decodedToken._id : null;
+  if (!userId) {
+    console.log('UserId is undefined or token is invalid');
+  }
   return (
     <Router>
       <Routes>
