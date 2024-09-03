@@ -9,22 +9,52 @@
     padding: 40px;
     width: 98vw;
     max-width: 10000px;
-    height: 150px;
+    height: 80%;
     min-height: 88vh;
-    margin: 60px auto 20px auto;
+    margin: 80px auto 20px auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     position: relative;
     box-sizing: border-box;
+    margin-top: 60px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    padding: 10px 20px;
+    border-radius: 8px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.app-name {
+    color: #ffffff; /* White text for contrast against the gradient */
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.post-actions {
+    display: flex;
+    gap: 5px;
 }
 
 .menu-container {
-    position: fixed;
-    top: 10px;
-    right: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
-    z-index: 800;
+    margin-left: auto;
 }
 
 .app-name {
@@ -41,14 +71,14 @@
     font-size: 20px;
     color: #333;
     margin-bottom: 20px;
-    position: absolute;
+    position: fixed;
     top: 10%;
     left: 50%;
     transform: translateX(-50%);
 }
 
 .posts-container {
-    margin-top: 60px; 
+    margin-top: 20px; 
     max-height: 60vh; 
     overflow-y: auto; 
     width: 100%;
@@ -76,16 +106,16 @@
 }
 
 .create-post-button,
-.edit-post-button {
+.edit-post-button,
+.delete-post-button {
     background-color: #da8358;
     color: #fff;
     border: none;
     border-radius: 5px;
-    padding: 8px 9px;
+    padding: 8px 10px;
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    height: auto;
-    min-width: 100px;
-    display: inline-block; 
+    min-width: 60px;
+    text-align: center;
 }

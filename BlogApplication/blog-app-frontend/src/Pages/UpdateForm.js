@@ -6,14 +6,12 @@ const UpdateForm = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const user = location.state?.user || {};
-    //console.log("user",user);
-
     const [userName, setUserName] = useState(user.userName || '');
     const [phoneNum, setPhoneNum] = useState(user.userPhone || '');
     const [locationData, setLocationData] = useState(user.userLocation || '');
     const [password, setPassword] = useState('');
     const userId = localStorage.getItem('userId');
-    //console.log(userId);
+
     useEffect(() => {
         if (!userId) {
             alert('User ID is missing. Please try logging in again.');

@@ -52,7 +52,6 @@ const getPostById = async (req, res) => {
   }
 };
 
-
 // Updating Post By Id
 const updatePostById = async (req, res) => {
   const { id } = req.params;
@@ -93,13 +92,14 @@ const deletePostById = async (req, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   try {
-    const post = await Post.findOneAndDelete({ _id: id, author: user._id });
+    const post = await Post.findOneAndDelete({ _id: id, author: user.userName }); 
     if (!post) {
-      return res.status(404).json({ error: 'Post not found nor created by this user.' });
+      return res.status(404).json({ error: 'Post not found or not created by this user.' });
     }
-    res.status(200).json({ message: 'Post deleted successfully' });
+    res.status(200).json({ message: 'Post deleted successfully', post });
   } catch (error) {
-    res.status(400).json({ error: 'An error occurred.' });
+    console.error('Error deleting post:', error); 
+    res.status(400).json({ error: 'An error occurred during deletion.' });
   }
 };
 

@@ -42,7 +42,6 @@ function App() {
         <Route path="/:userId/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
         <Route path="/:userId/create-post" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
         <Route path="/:userId/edit-post/:postId" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
-        {/* <Route path="/update-user" element={<UpdateForm />} /> */}
         <Route path ="*" element={<NotFound />} />
       </Routes>
     </Router>
