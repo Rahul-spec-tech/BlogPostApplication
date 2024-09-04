@@ -5,56 +5,19 @@ import './UserProfile.css';
 const UserProfile = () => {
     const location = useLocation();
     const navigate = useNavigate();
-    const [profilePhoto, setProfilePhoto] = useState('');
-    const [cloudinaryReady, setCloudinaryReady] = useState(false);
-    const user = location.state?.user;
+    const user = location.state?.user;                     
     const userId = localStorage.getItem('userId');
-
-    useEffect(() => {
-        if (window.cloudinary && window.cloudinary.createUploadWidget) {
-            setCloudinaryReady(true);
-        }else {
-            const script = document.createElement('script');
-            script.src = 'https://widget.cloudinary.com/v2.0/global/all.js';
-            script.onload = () => setCloudinaryReady(true);
-            script.onerror = () => console.error('Failed to load Cloudinary script');
-            document.head.appendChild(script);
-        }
-    }, []);
+    const [profilePhoto, setProfilePhoto] = useState(user?.profilePhoto || '');
 
     const onClose = () => {
         navigate(`/${userId}/user-page`);
     };
 
-    const handleUpload = () => {
-        if (cloudinaryReady) {
-            const cloudName = 'dunw7lbin';  
-            const uploadPreset = 'dmujcaz5';  
-            const folder = 'profile_pic';  
-            const uploadWidget = window.cloudinary.createUploadWidget({
-                cloudName: cloudName,
-                uploadPreset: uploadPreset,
-                folder: folder,
-                cropping: true,
-                showAdvancedOptions: true,
-                multiple: false,
-                maxImageWidth: 800,
-                maxImageHeight: 800,
-                maxFileSize: 10000000, 
-            },
-            (error, result) => {
-                if (!error && result && result.event === 'success') {
-                    console.log('Image uploaded successfully:', result.info.secure_url);
-                    setProfilePhoto(result.info.secure_url);
-                } else if (error) {
-                    console.error('Error uploading image:', error);
-                }
-            });
-            uploadWidget.open();
-        } else {
-            console.error('Cloudinary is not ready.');
+    useEffect(() => {
+        if (user?.profilePhoto) {
+            setProfilePhoto(user.profilePhoto);
         }
-    };
+    }, [user]);
 
     if (!user) {
         return <div>No user found. Try again</div>;
@@ -69,8 +32,8 @@ const UserProfile = () => {
                         <img src={profilePhoto} alt="Profile" />
                     </div>
                 ) : (
-                    <div className="profile-photo-placeholder" onClick={handleUpload}>
-                        <span className="upload-button">Choose or Upload a Photo</span>
+                    <div className="profile-photo-placeholder">
+                        <span className="upload-button">No Photo Available</span>
                     </div>
                 )}
             </div>

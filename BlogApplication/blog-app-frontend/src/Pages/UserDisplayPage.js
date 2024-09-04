@@ -31,7 +31,8 @@ const UserDisplayPage = () => {
                 userName: response.data.userName,
                 userEmail: response.data.email,
                 userPhone: response.data.phoneNum,
-                userLocation: response.data.location
+                userLocation: response.data.location,
+                profilePhoto: response.data.profilePhoto,
             });
         } catch (error) {
             console.error('Error fetching user data:', error);

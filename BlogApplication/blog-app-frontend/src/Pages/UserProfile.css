@@ -18,8 +18,8 @@
 }
 
 .profile-photo, .profile-photo-placeholder {
-    width: 100px; 
-    height: 100px; 
+    width: 125px; 
+    height: 125px; 
     border-radius: 50%; 
     overflow: hidden;
     background-color: #f0f0f0; 

@@ -10,6 +10,8 @@ import UpdateForm from './Pages/UpdateForm';
 import UserProfile from './Pages/UserProfile';
 import CreatePost from './Pages/NewPost';
 import EditPost from './Pages/EditPost';
+import { EditPostProvider } from './Pages/EditPostContext';
+
 
 function NotFound(){
   return <h1>404-Not Found</h1>;
@@ -33,6 +35,7 @@ function App() {
   }
   return (
     <Router>
+      <EditPostProvider>
       <Routes>
         <Route path="/" element={authToken ? <Navigate to={`/${userId}/user-page`} /> : <Navigate to="/login" />} />
         <Route path="/login" element={<LoginForm />} />
@@ -44,6 +47,7 @@ function App() {
         <Route path="/:userId/edit-post/:postId" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
         <Route path ="*" element={<NotFound />} />
       </Routes>
+      </EditPostProvider>
     </Router>
   );
 }

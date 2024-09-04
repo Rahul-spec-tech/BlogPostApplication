@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../models/controllers/user-controller.js');
 const { auth } = require('../middleware/auth-middleware.js');
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 
 // Creating a new user
 router.post('/add_user', userController.createUser);
@@ -20,5 +22,8 @@ router.put('/update_user/:id', auth, userController.updateUserById);
 
 // Deleting User By Id
 router.delete('/delete_user/:id', userController.deleteUserById);
+
+// Handle profile photo upload
+router.post('/upload_photo', auth, upload.single('profilePhoto'), userController.uploadProfilePhoto);
 
 module.exports = router;

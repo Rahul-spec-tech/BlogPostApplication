@@ -22,7 +22,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+    background-color: white;
     padding: 10px 20px;
     border-radius: 8px;
     position: fixed;
@@ -33,7 +33,7 @@
 }
 
 .app-name {
-    color: #ffffff; /* White text for contrast against the gradient */
+    color: #ffffff; 
     font-size: 1.5rem;
     font-weight: bold;
 }

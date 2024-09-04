@@ -22,7 +22,7 @@ const RegisterPage = () => {
             return;
         }
         try{
-            const response = await axios.post('http://localhost:8080/users/add_user', {userName, email, phoneNum, location, password}, {headers: { 'Content-Type': 'application/json'}});
+            const response = await axios.post(`http://localhost:8080/users/add_user`, {userName, email, phoneNum, location, password}, {headers: { 'Content-Type': 'application/json'}});
             if(response){
                 alert('Registed Successfully. Please Login');
                 navigate(`/login`);

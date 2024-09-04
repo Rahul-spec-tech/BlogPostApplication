@@ -10,15 +10,16 @@ const UpdateForm = () => {
     const [phoneNum, setPhoneNum] = useState(user.userPhone || '');
     const [locationData, setLocationData] = useState(user.userLocation || '');
     const [password, setPassword] = useState('');
+    const [profilePhoto, setProfilePhoto] = useState(null);
     const userId = localStorage.getItem('userId');
 
     useEffect(() => {
         if (!userId) {
             alert('User ID is missing. Please try logging in again.');
-            navigate('/login'); 
+            navigate('/login');
         }
     }, [userId, navigate]);
-    
+
     const handleUpdate = async (e) => {
         e.preventDefault();
         if (!userId) {
@@ -27,10 +28,16 @@ const UpdateForm = () => {
         }
         try {
             const token = localStorage.getItem('authToken');
-            console.log('Sending Data:', {
-                userName, phoneNum, locationData, password
-            });
-            const response = await axios.put(`http://localhost:8080/users/update_user/${userId}`,{ userName, phoneNum, locationData, password },{headers: {'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`}});
+            const formData = new FormData();
+            if (profilePhoto) {
+                formData.append('profilePhoto', profilePhoto);
+                await axios.post('http://localhost:8080/users/upload_photo', formData, { headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${token}` } });
+            }
+            const updateData = { userName, phoneNum, location: locationData };
+            if (password) {
+                updateData.password = password;
+            }
+            const response = await axios.put(`http://localhost:8080/users/update_user/${userId}`, updateData, { headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` } });
             console.log('Updated Response:', response.data);
             alert('Data updated successfully');
             navigate('/login');
@@ -41,10 +48,9 @@ const UpdateForm = () => {
         }
     };
 
-    const redirectUserPage=()=>{
+    const redirectUserPage = () => {
         navigate(`/${userId}/user-page`);
-    }
-    
+    };
     return (
         <div className="login-container">
             <h2>Update Form</h2>
@@ -64,6 +70,10 @@ const UpdateForm = () => {
                 <div className="input-group">
                     <label>Password:</label>
                     <input type="password" value={password} placeholder="Enter your Password" onChange={(e) => setPassword(e.target.value)} autoComplete="current-password" required />
+                </div>
+                <div className="input-group">
+                    <label>Profile Photo:</label>
+                    <input type="file" onChange={(e) => setProfilePhoto(e.target.files[0])} />
                 </div>
                 <button type="submit">Update</button>
                 <button type="button" onClick={redirectUserPage}>Close</button>

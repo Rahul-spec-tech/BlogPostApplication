@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './NewPost.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
+
 const CreatePost = () => {
     const location = useLocation();
     const navigate = useNavigate();

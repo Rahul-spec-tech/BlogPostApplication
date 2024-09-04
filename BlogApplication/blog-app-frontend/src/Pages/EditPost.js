@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useEditPost } from './EditPostContext';
 
 const EditPost = () => {
     const navigate = useNavigate();
+    const { postId, userId } = useParams();
+    const { editPostData, setEditPostData } = useEditPost(); 
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const {postId, userId} = useParams();
+
     useEffect(() => {
         const fetchPost = async () => {
             try {
@@ -17,6 +20,7 @@ const EditPost = () => {
                 if (response.data) {
                     setTitle(response.data.title || '');
                     setDescription(response.data.description || '');
+                    setEditPostData(response.data);
                 } else {
                     alert('No data found for this post.');
                 }
@@ -26,8 +30,8 @@ const EditPost = () => {
             }
         };
         fetchPost();
-    }, [postId]);
-    
+    }, [postId, setEditPostData]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const token = localStorage.getItem('authToken');
@@ -70,5 +74,6 @@ const EditPost = () => {
             </div>
         </div>
     );
-}
+};
+
 export default EditPost;

@@ -4,9 +4,8 @@ const PostContext = createContext();
 
 export const PostProvider = ({ children }) => {
     const [posts, setPosts] = useState([]);
-    const [editPost, setEditPost] = useState(null);
     return (
-        <PostContext.Provider value={{ posts, setPosts, editPost, setEditPost }}>
+        <PostContext.Provider value={{ posts, setPosts}}>
             {children}
         </PostContext.Provider>
     );

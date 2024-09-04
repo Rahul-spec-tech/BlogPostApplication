@@ -8,12 +8,28 @@ const userRouter = require('./routes/user-router');
 const app = express();
 const port = process.env.PORT || 8080;
 const mongodbUri = process.env.MONGODB_URI;
+const multer = require('multer');
+const path = require('path');
 
 app.use(cors({ origin: 'http://localhost:3000'}));
 app.use(bodyParser.json());
-
+app.use('/uploads', express.static('uploads')); 
 app.use('/users', userRouter); 
-app.use('/posts', postRouter); 
+app.use('/posts', postRouter);
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'uploads/');
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + path.extname(file.originalname));
+    }
+  }),
+  limits: { fileSize: 5*1024*1024}
+});
+
+
 mongoose.connect(mongodbUri)
   .then(() => console.log('MongoDB connected...'))
   .catch(err => console.log('MongoDB connection error:', err));
