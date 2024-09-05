@@ -1,12 +1,11 @@
 body {
   font-family: "Arial", sans-serif;
-  /* background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); */
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  overflow-y: autos;
+  overflow-y: auto;
 }
 
 .login-container {
@@ -20,7 +19,6 @@ body {
   flex-direction: column;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   justify-content: center;
-  border: none;
   width: 350px;
   text-align: center;
   position: relative;
@@ -66,7 +64,8 @@ input {
   box-sizing: border-box;
 }
 
-button {
+.login-button,
+.register-button {
   background-color: #ff7e67;
   border: none;
   color: white;
@@ -79,11 +78,13 @@ button {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-button:hover {
+.login-button:hover,
+.register-button:hover {
   background-color: #ff9e80;
   transform: translateY(-2px);
 }
 
-button:active {
+.login-button:active,
+.register-button:active {
   transform: translateY(0);
 }

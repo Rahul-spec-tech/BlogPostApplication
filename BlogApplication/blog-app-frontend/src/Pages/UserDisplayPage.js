@@ -90,27 +90,29 @@ const UserDisplayPage = () => {
     };
 
     return (
-        <div>
+        <div className="page-container">
             <div className="navbar">
-                <div className="app-name">Blog App</div>
-                <div className="menu-container">
-                    <button onClick={createPost} className="create-post-button">Create Post</button>
-                    <Dropdown>
-                        <Dropdown.Toggle variant="success" id="dropdown-basic">
-                            Menu
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                            <Dropdown.Item onClick={handleUpdateUserData}>Update</Dropdown.Item>
-                            <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
-                            <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
+                <div className="navbar-content">
+                    <div className="app-name">Blog App</div>
+                    <div className="greeting">
+                        {userName ? `Hello, ${userName}` : 'Hello, User'}
+                    </div>
+                    <div className="menu-container">
+                        <button onClick={createPost} className="create-post-button">Create Post</button>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                Menu
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu>
+                                <Dropdown.Item onClick={handleUpdateUserData}>Update</Dropdown.Item>
+                                <Dropdown.Item onClick={handleProfileClick}>Profile</Dropdown.Item>
+                                <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
+                    </div>
                 </div>
             </div>
-            <div className="user-display-container">
-                <div className="greeting">
-                    {userName ? `Hello, ${userName}` : 'Hello, User'}
-                </div>
+            <div className="content">
                 <div className="posts-container">
                     <h2>Blog Posts</h2>
                     {posts.length > 0 ? (

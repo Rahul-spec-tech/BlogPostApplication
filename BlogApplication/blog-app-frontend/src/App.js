@@ -12,7 +12,6 @@ import CreatePost from './Pages/NewPost';
 import EditPost from './Pages/EditPost';
 import { EditPostProvider } from './Pages/EditPostContext';
 
-
 function NotFound(){
   return <h1>404-Not Found</h1>;
 }
