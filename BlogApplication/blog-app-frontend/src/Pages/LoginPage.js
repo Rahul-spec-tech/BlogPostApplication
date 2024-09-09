@@ -16,17 +16,23 @@ const LoginForm = () => {
                 { headers: { 'Content-Type': 'application/json' } }
             );
             if (response.data.token) {
-                const { userName, userId } = response.data;
+                const { userName, userId, role } = response.data;
                 localStorage.setItem('authToken', response.data.token);
                 localStorage.setItem('userName', userName);
                 localStorage.setItem('userId', userId);
-                navigate(`/${userId}/user-page`, { state: { userName, userId } });
+                if(role === 'admin'){
+                    navigate('/admin/dashboard');
+                }
+                else{
+                    navigate(`/${userId}/user-page`, { state: { userName, userId } });
+                }
             } else {
                 alert('Login failed. Try again');
             }
         } catch (error) {
-            console.error('Login failed:', error.response ? error.response.data : error.message);
-            alert('Login failed. Please check your credentials and try again.');
+            const errorMsg = error.response?.data?.error || 'Login failed. Please check your credentials and try again.';
+            console.error('Login failed:', errorMsg);
+            alert(errorMsg);
         }
     };
 

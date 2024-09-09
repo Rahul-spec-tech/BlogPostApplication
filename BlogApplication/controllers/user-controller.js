@@ -1,15 +1,17 @@
-const User = require('../User');
+const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 // Creating a user
 const createUser = async (req, res) => {
-    const { userName, email, phoneNum, location, password } = req.body;
+    const { userName, email, phoneNum, location, password, role } = req.body;
     try {
         const hashedPassword = await bcrypt.hash(password, 10);
-        const user = new User({ userName, email, phoneNum, location, password: hashedPassword });
+        const user = new User({ userName, email, phoneNum, location, password: hashedPassword, role: role || 'user' });
+        console.log('Hashed Password for Storage:', hashedPassword);
         await user.save();
         res.status(201).send(user);
+        return hashedPassword;
     } catch (error) {
         if (error.code === 11000) {
             return res.status(400).json({ error: "User with this email already exists." });
@@ -23,15 +25,31 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
     try {
         const user = await User.findOne({ email });
+        console.log('User found:', user); 
         if (!user) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
-        const isMatching = await bcrypt.compare(password, user.password);
-        if (!isMatching) {
+        console.log('Password provided:', password.trim());
+        const hashedPassword = await bcrypt.hash(password, 10);
+        console.log('HashedPassword:',hashedPassword);
+        console.log('Password stored:', user.password);
+        const isMatch = await bcrypt.compare(password, user.password);
+        console.log('Password match:', isMatch);
+
+        if (!isMatch) {
             return res.status(400).json({ error: 'Invalid email or password' });
         }
-        const token = jwt.sign({ _id: user._id, userName: user.userName }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN });
-        res.json({ userName: user.userName, userId: user._id, token });
+        const token = jwt.sign(
+            { _id: user._id, userName: user.userName, role: user.role },process.env.JWT_SECRET,{ expiresIn: process.env.JWT_EXPIRES_IN }
+        );
+
+        res.status(200).json({
+            userName: user.userName,
+            userId: user._id,
+            role: user.role,
+            token,
+            message: 'Login successful'
+        });
     } catch (error) {
         console.error('Login error:', error);
         res.status(500).send(error);
@@ -107,12 +125,11 @@ const uploadProfilePhoto = async (req, res) => {
         return res.status(400).json({ error: 'No file uploaded' });
     }
     try {
-        const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${file.filename}`;
-        const user = await User.findByIdAndUpdate(req.user._id, { profilePhoto: fileUrl }, { new: true });
+        const user = await User.findByIdAndUpdate(req.user._id, { profilePhoto: req.file.path }, { new: true });
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
         }
-        res.status(200).json({ profilePhoto: fileUrl });
+        res.status(200).json({ message: 'Profile photo uploaded successfully', profilePhoto: req.file.path }); 
     } catch (error) {
         console.error('Error uploading profile photo:', error);
         res.status(500).send(error);

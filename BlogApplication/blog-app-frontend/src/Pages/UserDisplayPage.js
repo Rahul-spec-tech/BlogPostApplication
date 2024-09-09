@@ -12,6 +12,7 @@ const UserDisplayPage = () => {
     const { posts, setPosts } = usePosts();
     const userName = location.state?.userName || localStorage.getItem('userName');
     const userId = location.state?.userId || localStorage.getItem('userId');
+    const profilePhoto = localStorage.getItem('profilePhoto');
 
     useEffect(() => {
         if (!userId) {

@@ -1,7 +1,7 @@
-const Post = require ('../Post.js');
-const User = require ('../User.js');
+const Post = require ('../models/Post.js');
+const User = require ('../models/User.js');
 const jwt =  require ('jsonwebtoken');
-const { getUserDataFromToken } = require('../../middleware/auth-middleware');
+const { getUserDataFromToken } = require('../middleware/auth-middleware.js');
 
 // Creating a Post
 const createPost = async (req, res) => {
@@ -42,7 +42,13 @@ const getPostById = async (req, res) => {
     return res.status(401).json({ error: 'Unauthorized' });
   }
   try {
-    const post = await Post.findOne({ _id: id, author: user.userName });
+    let post;
+    if(user.role === 'admin'){
+      post = await Post.findById(id);
+    }
+    else{
+      post = await Post.findOne({ _id: id, author: user.userName });
+    }
     if (!post) {
       return res.status(404).json({ error: 'The Post was not found or not created by this user.' });
     }
@@ -103,10 +109,58 @@ const deletePostById = async (req, res) => {
   }
 };
 
+//Admin: Getting all posts
+const getAllPostsAdmin = async (req, res) => {
+  try{
+    const posts = await Post.find({});
+    res.status(200).json(posts);
+  }
+  catch (error){
+    res.status(400).json({error: 'An error occured while fetching the posts.'});
+  }
+};
+
+//Admin: Updating any post
+const updatePostByIdAdmin = async (req, res) => {
+  const { postId } = req.params;
+  const { title, description } = req.body;
+  try {
+    const post = await Post.findByIdAndUpdate(postId,
+      { title, description, updated_At: Date.now() },
+      { new: true, runValidators: true }
+    );
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found.' });
+    }
+    res.status(200).json(post);
+  } catch (error) {
+    console.error('Error updating post:', error);
+    res.status(400).json({ error: 'An error occurred.' });
+  }
+};
+
+// Admin: Deleting any post
+const deletePostByIdAdmin = async (req, res) => {
+  const { postId } = req.params;
+  try {
+    const post = await Post.findByIdAndDelete(postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found.' });
+    }
+    res.status(200).json({ message: 'Post deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting post:', error);
+    res.status(400).json({ error: 'An error occurred while deleting the post.' });
+  }
+};
+
 module.exports = {
   createPost,
   getAllPosts,
   getPostById,
   updatePostById,
-  deletePostById
+  deletePostById,
+  getAllPostsAdmin,
+  updatePostByIdAdmin,
+  deletePostByIdAdmin
 };

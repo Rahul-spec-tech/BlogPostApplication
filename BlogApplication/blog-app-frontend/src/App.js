@@ -1,5 +1,5 @@
 import React from 'react';
-import {jwtDecode}  from 'jwt-decode';
+import {jwtDecode} from 'jwt-decode';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import LoginForm from './Pages/LoginPage';
@@ -11,6 +11,8 @@ import UserProfile from './Pages/UserProfile';
 import CreatePost from './Pages/NewPost';
 import EditPost from './Pages/EditPost';
 import { EditPostProvider } from './Pages/EditPostContext';
+import AdminDisplayPage from './Pages/AdminDisplayPage';
+import AdminEditPage from './Pages/AdminEditPage';
 
 function NotFound(){
   return <h1>404-Not Found</h1>;
@@ -44,7 +46,10 @@ function App() {
         <Route path="/:userId/update-user" element={<ProtectedRoute><UpdateForm /></ProtectedRoute>} />
         <Route path="/:userId/create-post" element={<ProtectedRoute><CreatePost /></ProtectedRoute>} />
         <Route path="/:userId/edit-post/:postId" element={<ProtectedRoute><EditPost /></ProtectedRoute>} />
+        <Route path="/admin/edit-post/:postId" element={<AdminEditPage />} />
         <Route path ="*" element={<NotFound />} />
+        <Route path="/admin/dashboard" element={<AdminDisplayPage />} />
+        <Route path="/admin" element={<AdminDisplayPage />} />
       </Routes>
       </EditPostProvider>
     </Router>

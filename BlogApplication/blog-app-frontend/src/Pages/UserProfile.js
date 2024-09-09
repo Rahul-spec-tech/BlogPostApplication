@@ -7,7 +7,7 @@ const UserProfile = () => {
     const navigate = useNavigate();
     const user = location.state?.user;                     
     const userId = localStorage.getItem('userId');
-    const [profilePhoto, setProfilePhoto] = useState(user?.profilePhoto || '');
+    const [profilePhoto, setProfilePhoto] = useState(localStorage.getItem('profilePhoto') || '');
 
     const onClose = () => {
         navigate(`/${userId}/user-page`);

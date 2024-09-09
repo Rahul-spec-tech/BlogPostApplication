@@ -22,25 +22,21 @@
 
 .navbar-content {
     display: flex;
-    flex-direction: row;
-    align-items: center;
     width: 100%;
     max-width: 1200px;
-    justify-content: space-between; 
+    justify-content: space-between;
 }
 
 .app-name {
     color: #030303;
     font-size: 1.5rem;
     font-weight: bold;
-    margin-right: auto; 
 }
 
 .greeting {
     font-size: 20px;
     color: #333;
-    text-align: center;
-    flex: 1; 
+    padding-left: 70%;
 }
 
 .menu-container {
@@ -52,14 +48,13 @@
 .content {
     margin-top: 10vh;
     padding: 20px;
-    overflow-y: auto; 
-    height: calc(100vh - 10vh); 
+    overflow-y: auto;
+    height: calc(100vh - 10vh);
     background-color: #f0f0f0;
-    width: 100%; 
 }
 
 .posts-container {
-    margin-top: 20px; 
+    margin-top: 20px;
     width: 100%;
 }
 
@@ -95,6 +90,14 @@
     font-size: 12px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    min-width: 60px;
-    text-align: center;
+}
+
+.edit-post-button {
+    margin-right: 5px;
+}
+
+.post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
