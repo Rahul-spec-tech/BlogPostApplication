@@ -2,33 +2,37 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './LoginPage.css';
+
 const LoginForm = () => {
     const [email, setEmail] = useState(''); 
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
             const response = await axios.post('http://localhost:8080/users/login',
-                { email: email, password: password },
+                { email, password },
                 { headers: { 'Content-Type': 'application/json' } }
             );
-            console.log('Login Response:', response.data);
             if (response.data.token) {
-                const { userName, userId } = response.data;
-                // console.log('User Id1:', userId);
+                const { userName, userId, role } = response.data;
                 localStorage.setItem('authToken', response.data.token);
                 localStorage.setItem('userName', userName);
                 localStorage.setItem('userId', userId);
-                // console.log("User ID2:", userId);
-                console.log('Login Response:', response.data);
-                navigate('/user-page', { state: { userName, userId } });
+                if(role === 'admin'){
+                    navigate('/admin/dashboard');
+                }
+                else{
+                    navigate(`/${userId}/user-page`, { state: { userName, userId } });
+                }
             } else {
                 alert('Login failed. Try again');
             }
         } catch (error) {
-            console.error('Login failed:', error.response ? error.response.data : error.message);
-            alert('Login failed. Please check your credentials and try again.');
+            const errorMsg = error.response?.data?.error || 'Login failed. Please check your credentials and try again.';
+            console.error('Login failed:', errorMsg);
+            alert(errorMsg);
         }
     };
 
@@ -42,16 +46,17 @@ const LoginForm = () => {
             <form onSubmit={handleSubmit} className="login-form">
                 <div className="input-group">
                     <label>Email:</label>
-                    <input type="email" name="email" value={email} placeholder="Enter your EmailId" onChange={(e) => setEmail(e.target.value)} required autoComplete="email" />
+                    <input type="email" name="email" value={email} placeholder="Enter your Email ID" onChange={(e) => setEmail(e.target.value)} required autoComplete="email"/>
                 </div>
                 <div className="input-group">
                     <label>Password:</label>
-                    <input type="password" name="password" value={password} placeholder="Enter the password" onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password" />
+                    <input type="password" name="password" value={password} placeholder="Enter your password" onChange={(e) => setPassword(e.target.value)} required autoComplete="current-password"/>
                 </div>
-                <button type="submit">Login</button>
-                <button type="button" onClick={handleRegister}>Register</button> 
+                <button type="submit" className="login-button">Login</button>
+                <button type="button" onClick={handleRegister} className="register-button">Register</button> 
             </form>
         </div>
     );
 };
+
 export default LoginForm;
